@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useRecentProducts } from "@/context/recentProducts.provider";
 import { IProduct } from "@/types";
-import { Eye, UserCheck } from "lucide-react";
+import { Eye, UserCheck, Star } from "lucide-react"; // Importing the Star icon
 import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "../cart/AddToCart";
@@ -39,10 +39,32 @@ const ProductCard = ({ product }: IProps) => {
     onSale,
     shop,
     isFollowed,
+    rating, // Assuming the rating is available in the product object
   } = product;
 
   const handleViewDetails = () => {
     addProduct(product);
+  };
+
+  // Helper function to render stars based on the rating
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const halfStars = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStars;
+
+    return (
+      <>
+        {[...Array(fullStars)].map((_, index) => (
+          <Star key={`full-${index}`} className="w-4 h-4 text-yellow-500" />
+        ))}
+        {halfStars === 1 && (
+          <Star key="half" className="w-4 h-4 text-yellow-500 opacity-50" />
+        )}
+        {[...Array(emptyStars)].map((_, index) => (
+          <Star key={`empty-${index}`} className="w-4 h-4 text-gray-400" />
+        ))}
+      </>
+    );
   };
 
   return (
@@ -86,6 +108,7 @@ const ProductCard = ({ product }: IProps) => {
             )}
           </div>
         </div>
+
         <div className="text-lg font-semibold">
           {onSale ? (
             <>
@@ -100,6 +123,16 @@ const ProductCard = ({ product }: IProps) => {
             <span>${price}</span>
           )}
         </div>
+
+        {/* Display the rating here */}
+        {rating !== undefined ? (
+          <div className="flex items-center gap-1 text-yellow-500 mt-2">
+            {renderStars(rating)}{" "}
+            <span className="text-sm text-gray-500">{rating?.toFixed(1)}</span>
+          </div>
+        ) : (
+          <span className="text-sm text-gray-500 mt-2">No ratings yet</span>
+        )}
       </CardHeader>
 
       <CardContent className="p-4 pb-0">
@@ -143,7 +176,7 @@ const ProductCard = ({ product }: IProps) => {
       <CardFooter className="mt-auto p-4 pt-0 flex flex-wrap justify-between items-center">
         <Link href={`/products/${product._id}`} onClick={handleViewDetails}>
           <Button variant="outline" size="sm">
-            <Eye className="mr-2" /> View Details
+            <Eye />
           </Button>
         </Link>
         <AddToCart product={product} />
