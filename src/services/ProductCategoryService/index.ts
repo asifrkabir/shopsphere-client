@@ -4,10 +4,9 @@
 import axiosInstance from "@/lib/AxiosInstance";
 import {
   IApiResponse,
-  ICreateProductCategory,
   IProductCategory,
   IQueryParam,
-  IUpdateProductCategory,
+  IUpdateProductCategoryFormData,
 } from "@/types";
 
 export const getAllProductCategories = async (params?: IQueryParam[]) => {
@@ -71,13 +70,14 @@ export const getProductCategoryById = async (id: string) => {
   }
 };
 
-export const createProductCategory = async (
-  productCategoryData: ICreateProductCategory
-) => {
+export const createProductCategory = async (productCategoryData: FormData) => {
   try {
     const { data } = await axiosInstance.post<IApiResponse<IProductCategory>>(
       "/product-categories",
-      productCategoryData
+      productCategoryData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
     );
 
     return data;
@@ -101,12 +101,13 @@ export const createProductCategory = async (
 };
 
 export const updateProductCategory = async (
-  productCategoryData: IUpdateProductCategory
+  productCategoryData: IUpdateProductCategoryFormData
 ) => {
   try {
     const { data } = await axiosInstance.put<IApiResponse<IProductCategory>>(
       `/product-categories/${productCategoryData.id}`,
-      productCategoryData.payload
+      productCategoryData.formData,
+      { headers: { "Content-Type": "multipart/form-data" } }
     );
 
     return data;

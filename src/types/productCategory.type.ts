@@ -1,6 +1,7 @@
 export interface IProductCategory {
   _id: string;
   name: string;
+  logo?: string;
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
@@ -11,8 +12,11 @@ export interface ICreateProductCategory {
 }
 
 export interface IUpdateProductCategory {
+  name: string;
+  logo: string | null;
+}
+
+export interface IUpdateProductCategoryFormData {
   id: string;
-  payload: {
-    name: string;
-  };
+  formData: FormData;
 }

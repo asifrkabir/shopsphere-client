@@ -8,13 +8,12 @@ import {
 } from "@/services/ProductCategoryService";
 import { IApiResponse, IQueryParam } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  ICreateProductCategory,
-  IProductCategory,
-  IUpdateProductCategory,
-} from "./../types/productCategory.type";
 import httpStatus from "http-status";
 import { toast } from "sonner";
+import {
+  IProductCategory,
+  IUpdateProductCategoryFormData,
+} from "./../types/productCategory.type";
 
 export const getAllProductCategoriesQuery = (params?: IQueryParam[]) => ({
   queryKey: ["PRODUCT_CATEGORIES", params],
@@ -39,13 +38,13 @@ export const useGetProductCategoryById = (id: string) => {
 };
 
 export const useCreateProductCategory = () => {
-  return useMutation<any, Error, ICreateProductCategory>({
+  return useMutation<any, Error, FormData>({
     mutationFn: createProductCategory,
   });
 };
 
 export const useUpdateProductCategory = () => {
-  return useMutation<any, Error, IUpdateProductCategory>({
+  return useMutation<any, Error, IUpdateProductCategoryFormData>({
     mutationFn: updateProductCategory,
   });
 };
