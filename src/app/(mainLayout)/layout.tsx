@@ -1,3 +1,4 @@
+import Footer from "@/components/Shared/Footer/Footer";
 import MainHeader from "@/components/Shared/Nav/MainHeader/MainHeader";
 import ScrollToTopButton from "@/components/Shared/ScrollToTopButton";
 import { CartProvider } from "@/context/cart.provider";
@@ -15,6 +16,7 @@ export default function MainLayout({
           <MainHeader />
           <ScrollToTopButton />
           <div className="min-h-screen w-full p-8">{children}</div>
+          <Footer />
         </RecentProductsProvider>
       </CartProvider>
     </div>
