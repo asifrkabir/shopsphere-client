@@ -15,7 +15,7 @@ import styles from "./MainMobileNavbar.module.css";
 
 export default function MainMobileNavbar() {
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <Sheet>
         <SheetTrigger>
           <AlignJustify />
