@@ -22,7 +22,7 @@ export default function HomePage() {
       <ProductCategories />
 
       <div className="flex items-center justify-center mb-8 mt-20">
-        <h1 className="text-lg font-semibold md:text-2xl">Hot Deals 🔥</h1>
+        {/* <h1 className="text-lg font-semibold md:text-2xl">Hot Deals 🔥</h1> */}
       </div>
       <Suspense>
         <HotDealsProducts />

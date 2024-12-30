@@ -28,15 +28,12 @@ interface IProps {
 const ProductCard = ({ product }: IProps) => {
   const { addProduct } = useRecentProducts();
 
-  const maxContentLength = 100;
-  const maxImagesToShow = 2;
+  const maxImagesToShow = 1;
 
   const {
     name,
-    description,
     price,
     discountedPrice,
-    category,
     inventoryCount,
     imageUrls,
     onSale,
@@ -76,23 +73,12 @@ const ProductCard = ({ product }: IProps) => {
                 )}
               </Link>
             </TooltipProvider>
-            <h3 className="text-md mb-4">Category: {category.name}</h3>
-            {description && (
-              <p className="text-sm text-muted-foreground">
-                {description.slice(0, maxContentLength)}
-                {description.length > maxContentLength && (
-                  <Link href={`/products/${product._id}`}>
-                    <span className="text-emerald-600 cursor-pointer hover:underline">
-                      ...Read more
-                    </span>
-                  </Link>
-                )}
-              </p>
-            )}
           </div>
           <div className="col-span-1 ml-auto">
             {inventoryCount <= 0 ? (
               <Badge className="bg-gray-400 text-white">Out of Stock</Badge>
+            ) : inventoryCount <= 5 ? (
+              <Badge className="bg-yellow-500 text-white">Limited Stock</Badge>
             ) : (
               <Badge className="bg-emerald-500 text-white text-center">
                 In Stock
@@ -100,19 +86,23 @@ const ProductCard = ({ product }: IProps) => {
             )}
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-between">
+        <div className="text-lg font-semibold">
           {onSale ? (
-            <div className="text-sm text-emerald-600">
-              <span className="line-through">${price}</span>{" "}
-              <span className="font-semibold">${discountedPrice}</span>
-            </div>
+            <>
+              <span className="text-gray-500 line-through">${price}</span>{" "}
+              <span className="text-emerald-600">${discountedPrice}</span>{" "}
+              <span className="text-red-500 text-sm font-bold">
+                ({Math.round(((price - (discountedPrice || 0)) / price) * 100)}%
+                OFF)
+              </span>
+            </>
           ) : (
-            <div className="text-sm font-semibold">${price}</div>
+            <span>${price}</span>
           )}
         </div>
       </CardHeader>
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 pb-0">
         {imageUrls && imageUrls.length > 0 ? (
           <div className="grid xs:grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-2 mb-8">
             {imageUrls.slice(0, maxImagesToShow).map((imageUrl, index) => (
@@ -122,7 +112,7 @@ const ProductCard = ({ product }: IProps) => {
                   alt={`Product image ${index + 1}`}
                   width={300}
                   height={150}
-                  className="object-cover transition duration-300 rounded-sm"
+                  className="object-cover transition duration-300 rounded-sm w-full"
                 />
                 {index === maxImagesToShow - 1 &&
                   imageUrls!.length > maxImagesToShow && (
@@ -142,7 +132,7 @@ const ProductCard = ({ product }: IProps) => {
                   alt={`Placeholder image ${index + 1}`}
                   width={300}
                   height={150}
-                  className="object-cover rounded-md transition-all duration-300"
+                  className="object-cover rounded-md transition-all duration-300 w-full"
                 />
               </div>
             ))}
@@ -150,7 +140,7 @@ const ProductCard = ({ product }: IProps) => {
         )}
       </CardContent>
 
-      <CardFooter className="mt-auto p-4 flex flex-wrap space-y-2 justify-between items-center">
+      <CardFooter className="mt-auto p-4 pt-0 flex flex-wrap justify-between items-center">
         <Link href={`/products/${product._id}`} onClick={handleViewDetails}>
           <Button variant="outline" size="sm">
             <Eye className="mr-2" /> View Details
