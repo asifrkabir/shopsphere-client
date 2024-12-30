@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Banner from "./components/Banner";
 import HotDealsProducts from "./components/HotDealsProducts";
 import ProductCategories from "./components/ProductCategories";
+import CompareProducts from "./components/CompareProducts";
 
 export default function HomePage() {
   return (
@@ -21,11 +22,14 @@ export default function HomePage() {
       </div>
       <ProductCategories />
 
-      <div className="flex items-center justify-center mb-8 mt-20">
-        {/* <h1 className="text-lg font-semibold md:text-2xl">Hot Deals 🔥</h1> */}
-      </div>
+      <div className="flex items-center justify-center mb-8 mt-20" />
       <Suspense>
         <HotDealsProducts />
+      </Suspense>
+
+      <div className="flex items-center justify-center mb-8 mt-10" />
+      <Suspense>
+        <CompareProducts />
       </Suspense>
 
       <div className="flex items-center justify-center mb-8 mt-40">

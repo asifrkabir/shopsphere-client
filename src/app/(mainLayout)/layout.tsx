@@ -15,7 +15,7 @@ export default function MainLayout({
         <RecentProductsProvider>
           <MainHeader />
           <ScrollToTopButton />
-          <div className="min-h-screen w-full p-8">{children}</div>
+          <div className="min-h-screen w-full p-8 bg-gray-50">{children}</div>
           <Footer />
         </RecentProductsProvider>
       </CartProvider>
