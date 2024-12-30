@@ -14,36 +14,59 @@ import { ListItem } from "./ListItem";
 
 const products: { title: string; href: string; description: string }[] = [
   {
-    title: "Electronics",
-    href: "/products/electronics",
+    title: "Electronics & Gadgets",
+    href: "/products?category=67724ca2011523881931ed0e",
     description: "Explore a wide range of gadgets, devices, and accessories.",
   },
   {
-    title: "Fashion",
-    href: "/products/fashion",
+    title: "Fashion & Apparel",
+    href: "/products?category=67724ff0011523881931ed5d",
     description:
       "Discover the latest trends in clothing, shoes, and accessories.",
   },
   {
-    title: "Home & Kitchen",
-    href: "/products/home-kitchen",
-    description: "Shop essentials and decor for your home and kitchen.",
+    title: "Health & Beauty",
+    href: "/products?category=67724ffa011523881931ed6b",
+    description: "Discover beauty products and personal care essentials.",
+  },
+  {
+    title: "Books & Stationery",
+    href: "/products?category=67725004011523881931ed70",
+    description:
+      "Browse a wide selection of books, notebooks, and stationery items.",
   },
   {
     title: "Sports & Outdoors",
-    href: "/products/sports-outdoors",
+    href: "/products?category=67725009011523881931ed75",
     description:
       "Gear up for your next adventure with sports and outdoor equipment.",
   },
   {
-    title: "Toys & Games",
-    href: "/products/toys-games",
+    title: "Toys, Kids & Baby",
+    href: "/products?category=6772500c011523881931ed7a",
     description: "Find fun and exciting toys and games for all ages.",
   },
   {
-    title: "Beauty & Personal Care",
-    href: "/products/beauty-care",
-    description: "Discover beauty products and personal care essentials.",
+    title: "Home & Kitchen",
+    href: "/products?category=677250a7011523881931eda7",
+    description: "Shop essentials and decor for your home and kitchen.",
+  },
+  {
+    title: "Groceries & Gourmet Foods",
+    href: "/products?category=677250ae011523881931edac",
+    description: "Stock up on everyday essentials and gourmet food products.",
+  },
+  {
+    title: "Automotive & Tools",
+    href: "/products?category=677250b3011523881931edb1",
+    description:
+      "Find automotive parts, tools, and accessories for every need.",
+  },
+  {
+    title: "Pet Supplies",
+    href: "/products?category=677250b6011523881931edb6",
+    description:
+      "Shop for pet food, toys, and accessories for your furry friends.",
   },
 ];
 
@@ -67,7 +90,7 @@ export default function MainNavbar() {
               Products
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-4 lg:w-[800px] ">
                 {products.map((product) => (
                   <ListItem
                     key={product.title}
