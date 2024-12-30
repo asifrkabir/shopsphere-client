@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/card";
 import { useRecentProducts } from "@/context/recentProducts.provider";
 import { IProduct } from "@/types";
-import { Eye, UserCheck, Star } from "lucide-react"; // Importing the Star icon
+import { Eye, UserCheck } from "lucide-react"; // Importing the Star icon
 import Image from "next/image";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa";
 import AddToCart from "../cart/AddToCart";
 import {
   Tooltip,
@@ -39,31 +40,27 @@ const ProductCard = ({ product }: IProps) => {
     onSale,
     shop,
     isFollowed,
-    rating, // Assuming the rating is available in the product object
+    rating,
+    numOfRatings,
   } = product;
 
   const handleViewDetails = () => {
     addProduct(product);
   };
 
-  // Helper function to render stars based on the rating
   const renderStars = (rating: number) => {
-    const fullStars = Math.floor(rating);
-    const halfStars = rating % 1 >= 0.5 ? 1 : 0;
-    const emptyStars = 5 - fullStars - halfStars;
-
     return (
-      <>
-        {[...Array(fullStars)].map((_, index) => (
-          <Star key={`full-${index}`} className="w-4 h-4 text-yellow-500" />
+      <div className="flex items-center">
+        {Array.from({ length: 5 }, (_, index) => (
+          <FaStar
+            key={index}
+            className={`h-4 w-4 ${
+              index < Math.round(rating) ? "text-yellow-400" : "text-gray-300"
+            }`}
+          />
         ))}
-        {halfStars === 1 && (
-          <Star key="half" className="w-4 h-4 text-yellow-500 opacity-50" />
-        )}
-        {[...Array(emptyStars)].map((_, index) => (
-          <Star key={`empty-${index}`} className="w-4 h-4 text-gray-400" />
-        ))}
-      </>
+        <span className="text-gray-500 ml-1">{`(${numOfRatings || 0})`}</span>
+      </div>
     );
   };
 
@@ -81,10 +78,12 @@ const ProductCard = ({ product }: IProps) => {
             <TooltipProvider>
               <Link
                 href={`/shops/${shop._id}`}
-                className="hover:text-emerald-500 flex items-center gap-2 mb-4 mt-2 max-w-max"
+                className="flex items-center mb-4 mt-2 max-w-max"
               >
-                <h3 className="text-md">{shop.name}</h3>
-
+                by
+                <span className="text-emerald-500 ml-1">
+                  <h3 className="text-md">{shop.name}</h3>
+                </span>
                 {isFollowed === 1 && (
                   <Tooltip>
                     <TooltipTrigger>
@@ -126,9 +125,8 @@ const ProductCard = ({ product }: IProps) => {
 
         {/* Display the rating here */}
         {rating !== undefined ? (
-          <div className="flex items-center gap-1 text-yellow-500 mt-2">
+          <div className="flex items-center gap-1 mt-2">
             {renderStars(rating)}{" "}
-            <span className="text-sm text-gray-500">{rating?.toFixed(1)}</span>
           </div>
         ) : (
           <span className="text-sm text-gray-500 mt-2">No ratings yet</span>

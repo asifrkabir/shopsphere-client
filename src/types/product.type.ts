@@ -18,6 +18,7 @@ export interface IProduct {
   updatedAt: string;
   isFollowed?: number;
   rating?: number;
+  numOfRatings?: number;
 }
 
 export interface IUpdateProduct {

@@ -4,9 +4,10 @@ import AddToCart from "@/components/cart/AddToCart";
 import { getAllReviewsQuery } from "@/hooks/review.hook";
 import { IProduct, IReview } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Star } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { FaStar } from "react-icons/fa";
 
 interface IProps {
   product: IProduct;
@@ -83,8 +84,10 @@ const ProductDetails = ({ product }: IProps) => {
 
         <div className="flex flex-col">
           <h1 className="text-3xl font-semibold">{name}</h1>
-          <Link href={`/shops/${shop._id}`} className="hover:text-emerald-500">
-            <h3 className="text-md mb-4">{shop.name}</h3>
+          <Link href={`/shops/${shop._id}`}>
+            <h3 className="text-md mb-4">
+              by <span className="text-emerald-500">{shop.name}</span>
+            </h3>
           </Link>
           <h3 className="text-md mb-4">Category: {category.name}</h3>
 
@@ -118,7 +121,7 @@ const ProductDetails = ({ product }: IProps) => {
               <>
                 <div className="flex">
                   {Array.from({ length: 5 }, (_, index) => (
-                    <Star
+                    <FaStar
                       key={index}
                       className={`h-6 w-6 ${
                         index < averageRating
@@ -128,9 +131,7 @@ const ProductDetails = ({ product }: IProps) => {
                     />
                   ))}
                 </div>
-                <span className="text-sm text-gray-500 ml-2">
-                  {averageRating.toFixed(1)} / 5
-                </span>
+                <span className="text-gray-500">{`(${reviewsData?.data?.length})`}</span>
               </>
             )}
           </div>
