@@ -12,6 +12,7 @@ const ProductCategories = () => {
 
   const { data, isLoading, isError } = useGetAllProductCategories([
     { name: "limit", value: 10 },
+    { name: "sort", value: "createdAt" },
   ]);
 
   if (isLoading) {
