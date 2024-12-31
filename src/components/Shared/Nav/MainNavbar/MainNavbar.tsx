@@ -14,7 +14,7 @@ import { ListItem } from "./ListItem";
 
 const products: { title: string; href: string; description: string }[] = [
   {
-    title: "All",
+    title: "Explore All",
     href: "/products",
     description: "Browse through thousands of available products.",
   },

@@ -73,7 +73,7 @@ const ProductCard = ({ product }: IProps) => {
               href={`/products/${product._id}`}
               className="hover:text-emerald-500"
             >
-              <h2 className="text-xl font-bold">{name}</h2>
+              <h2 className="text-md font-bold">{name}</h2>
             </Link>
             <TooltipProvider>
               <Link
@@ -82,7 +82,7 @@ const ProductCard = ({ product }: IProps) => {
               >
                 by
                 <span className="text-emerald-500 ml-1">
-                  <h3 className="text-md">{shop.name}</h3>
+                  <h3 className="text-sm">{shop.name}</h3>
                 </span>
                 {isFollowed === 1 && (
                   <Tooltip>

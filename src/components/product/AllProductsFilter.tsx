@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Input } from "@/components/ui/input";
@@ -18,17 +17,18 @@ import { useForm } from "react-hook-form";
 interface AllProductsFilterProps {
   setParams: React.Dispatch<React.SetStateAction<IQueryParam[]>>;
   initialCategory?: string;
+  initialSearchTerm?: string;
 }
 
 const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
   setParams,
   initialCategory,
+  initialSearchTerm,
 }) => {
   const { register, setValue, watch } = useForm({
     defaultValues: {
-      searchTerm: undefined,
+      searchTerm: initialSearchTerm,
       category: initialCategory || "all",
-      isDiscounted: undefined,
       priceMin: undefined,
       priceMax: undefined,
     },
@@ -36,7 +36,6 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
 
   const searchTerm = useDebounce(watch("searchTerm"));
   const category = watch("category");
-  const isDiscounted = watch("isDiscounted");
   const priceMin = useDebounce(watch("priceMin"));
   const priceMax = useDebounce(watch("priceMax"));
 
@@ -82,17 +81,7 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
   }, [category, setParams, updateParams]);
 
   useEffect(() => {
-    if (isDiscounted !== undefined && isDiscounted !== "on") {
-      if (isDiscounted) {
-        updateParams("onSale", true);
-      } else {
-        setParams((prev) => prev.filter((param) => param.name !== "onSale"));
-      }
-    }
-  }, [isDiscounted, setParams, updateParams]);
-
-  useEffect(() => {
-    if (priceMin !== undefined && priceMin !== "") {
+    if (priceMin) {
       updateParams("priceMin", priceMin);
     } else {
       setParams((prev) => prev.filter((param) => param.name !== "priceMin"));
@@ -100,7 +89,7 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
   }, [priceMin, setParams, updateParams]);
 
   useEffect(() => {
-    if (priceMax !== undefined && priceMax !== "") {
+    if (priceMax) {
       updateParams("priceMax", priceMax);
     } else {
       setParams((prev) => prev.filter((param) => param.name !== "priceMax"));
@@ -108,23 +97,23 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
   }, [priceMax, setParams, updateParams]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+    <div className="space-y-4">
       <Input
         type="text"
         {...register("searchTerm")}
         placeholder="Search products..."
-        className="max-w-xs"
+        className="w-full"
       />
 
       <Select
         value={category}
         onValueChange={(value) => setValue("category", value)}
       >
-        <SelectTrigger className="max-w-xs">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Select Category" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="all">All Categories</SelectItem>
           {productCategories.map((category) => (
             <SelectItem key={category.value} value={category.value}>
               {category.label}
@@ -137,23 +126,15 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
         type="number"
         {...register("priceMin")}
         placeholder="Min price"
-        className="max-w-xs"
+        className="w-full"
       />
 
       <Input
         type="number"
         {...register("priceMax")}
         placeholder="Max price"
-        className="max-w-xs"
+        className="w-full"
       />
-
-      {/* <div className="flex items-center gap-2">
-        <Switch
-          {...register("isDiscounted")}
-          onCheckedChange={(checked) => setValue("isDiscounted", checked)}
-        />
-        <label className="text-sm">Show only discounted</label>
-      </div> */}
     </div>
   );
 };
