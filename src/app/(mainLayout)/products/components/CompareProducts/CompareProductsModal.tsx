@@ -12,6 +12,7 @@ import {
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
 import CompareProducts from "./CompareProducts";
+import { ArrowLeftRight } from "lucide-react";
 
 export function CompareProductsModal() {
   const [open, setOpen] = useState(false);
@@ -19,8 +20,8 @@ export function CompareProductsModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-emerald-500 hover:bg-emerald-700">
-          Compare Products
+        <Button className="bg-emerald-500 hover:bg-emerald-700 gap-2">
+          Compare Products <ArrowLeftRight className="size-4" />
         </Button>
       </DialogTrigger>
       <DialogContent

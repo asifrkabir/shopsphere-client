@@ -14,6 +14,11 @@ import { ListItem } from "./ListItem";
 
 const products: { title: string; href: string; description: string }[] = [
   {
+    title: "All",
+    href: "/products",
+    description: "Browse through thousands of available products.",
+  },
+  {
     title: "Electronics & Gadgets",
     href: "/products?category=67724ca2011523881931ed0e",
     description: "Explore a wide range of gadgets, devices, and accessories.",

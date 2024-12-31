@@ -44,7 +44,7 @@ const HotDealsProducts = () => {
     <div className="w-full bg-gradient-to-br from-emerald-400 to-emerald-600 p-8 rounded-lg">
       <div className="flex flex-col lg:flex-row lg:items-start gap-8">
         {/* Left Section: Timer and Banner */}
-        <div className="lg:w-1/4 flex flex-col items-center text-white p-6">
+        <div className="lg:w-1/4 flex flex-col items-center text-white p-6 my-auto">
           <h2 className="text-3xl font-bold mb-4">Hot Deals! 🔥</h2>
           <p className="text-sm mb-4 text-center">
             Hurry up! These deals are valid for a limited time only.
