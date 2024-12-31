@@ -15,10 +15,10 @@ import styles from "./MainMobileNavbar.module.css";
 
 export default function MainMobileNavbar() {
   return (
-    <div className="lg:hidden">
+    <div className="lg:hidden flex">
       <Sheet>
         <SheetTrigger>
-          <AlignJustify />
+          <AlignJustify className="text-white" />
         </SheetTrigger>
         <VisuallyHidden>
           <SheetHeader>

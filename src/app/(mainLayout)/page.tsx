@@ -14,9 +14,7 @@ export default function HomePage() {
           <Banner />
         </div>
         <div className="col-span-full xl:col-span-1">
-          <div>
-            <RecentProducts />
-          </div>
+          <RecentProducts />
         </div>
       </div>
 

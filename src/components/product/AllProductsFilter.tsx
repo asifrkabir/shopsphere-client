@@ -1,5 +1,3 @@
-"use client";
-
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -13,6 +11,8 @@ import { useGetAllProductCategories } from "@/hooks/productCategory.hook";
 import { IQueryParam } from "@/types";
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 interface AllProductsFilterProps {
   setParams: React.Dispatch<React.SetStateAction<IQueryParam[]>>;
@@ -20,17 +20,26 @@ interface AllProductsFilterProps {
   initialSearchTerm?: string;
 }
 
+interface FormValues {
+  searchTerm: string | undefined;
+  category: string;
+  priceMin: number | undefined;
+  priceMax: number | undefined;
+  priceRange: string;
+}
+
 const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
   setParams,
   initialCategory,
   initialSearchTerm,
 }) => {
-  const { register, setValue, watch } = useForm({
+  const { register, setValue, watch } = useForm<FormValues>({
     defaultValues: {
       searchTerm: initialSearchTerm,
       category: initialCategory || "all",
       priceMin: undefined,
       priceMax: undefined,
+      priceRange: "",
     },
   });
 
@@ -96,45 +105,101 @@ const AllProductsFilter: React.FC<AllProductsFilterProps> = ({
     }
   }, [priceMax, setParams, updateParams]);
 
+  const handlePriceRangeChange = (priceRange: string) => {
+    if (priceRange) {
+      switch (priceRange) {
+        case "all":
+          setValue("priceMin", undefined);
+          setValue("priceMax", undefined);
+          break;
+        case "below_100":
+          setValue("priceMin", undefined);
+          setValue("priceMax", 100);
+          break;
+        case "100_500":
+          setValue("priceMin", 100);
+          setValue("priceMax", 500);
+          break;
+        case "500_1000":
+          setValue("priceMin", 500);
+          setValue("priceMax", 1000);
+          break;
+        case "above_1000":
+          setValue("priceMin", 1000);
+          setValue("priceMax", undefined);
+          break;
+        default:
+          setValue("priceMin", undefined);
+          setValue("priceMax", undefined);
+          break;
+      }
+    }
+  };
+
   return (
     <div className="space-y-4">
-      <Input
-        type="text"
-        {...register("searchTerm")}
-        placeholder="Search products..."
-        className="w-full"
-      />
+      <div>
+        <h4 className="font-medium mb-2">Search Product</h4>
 
-      <Select
-        value={category}
-        onValueChange={(value) => setValue("category", value)}
-      >
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="Select Category" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">All Categories</SelectItem>
-          {productCategories.map((category) => (
-            <SelectItem key={category.value} value={category.value}>
-              {category.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        <Input
+          type="text"
+          {...register("searchTerm")}
+          placeholder="Search products..."
+          className="w-full"
+        />
+      </div>
 
-      <Input
-        type="number"
-        {...register("priceMin")}
-        placeholder="Min price"
-        className="w-full"
-      />
+      <div>
+        <h4 className="font-medium mb-2">Search Category</h4>
 
-      <Input
-        type="number"
-        {...register("priceMax")}
-        placeholder="Max price"
-        className="w-full"
-      />
+        <Select
+          value={category}
+          onValueChange={(value) => setValue("category", value)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select Category" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Categories</SelectItem>
+            {productCategories.map((category) => (
+              <SelectItem key={category.value} value={category.value}>
+                {category.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <h4 className="font-medium mb-2">Price Ranges</h4>
+
+        <RadioGroup
+          value={undefined}
+          onValueChange={(value) => handlePriceRangeChange(value)}
+          className="space-y-2"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="any" id="any" />
+            <Label htmlFor="any">All</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="below_100" id="below_100" />
+            <Label htmlFor="below_100">Below $100</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="100_500" id="100_500" />
+            <Label htmlFor="100_500">$100 - $500</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="500_1000" id="500_1000" />
+            <Label htmlFor="500_1000">$500 - $1000</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="above_1000" id="above_1000" />
+            <Label htmlFor="above_1000">Above $1000</Label>
+          </div>
+        </RadioGroup>
+      </div>
     </div>
   );
 };

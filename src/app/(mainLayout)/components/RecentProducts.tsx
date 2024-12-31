@@ -18,8 +18,8 @@ const RecentProducts = () => {
   const products = data?.data || [];
 
   return (
-    <div className="w-full p-6 rounded-lg border border-gray-300 bg-white">
-      <h3 className="text-xl font-semibold leading-tight mb-4 text-center flex items-center">
+    <div className="w-full p-6 rounded-lg border border-gray-300 bg-white min-h-full">
+      <h3 className="text-xl font-semibold leading-tight mb-8 text-center flex items-center">
         New Arrivals <Sparkles className="size-5 ml-2 text-yellow-500" />
       </h3>
       <div className="flex flex-col lg:flex-row lg:items-start gap-8">
