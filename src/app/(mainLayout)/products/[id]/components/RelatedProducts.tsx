@@ -10,7 +10,7 @@ interface IProps {
 
 const RelatedProducts = ({ categoryId }: IProps) => {
   const { data, isLoading, isError } = useGetAllProductsForFeed([
-    { name: "limit", value: 3 },
+    { name: "limit", value: 4 },
     { name: "category", value: categoryId },
   ]);
 
@@ -19,8 +19,8 @@ const RelatedProducts = ({ categoryId }: IProps) => {
   return (
     <div className="w-full">
       {isLoading ? (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, idx) => (
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, idx) => (
             <ProductCardLoadingSkeleton key={idx} />
           ))}
         </div>
@@ -37,7 +37,7 @@ const RelatedProducts = ({ categoryId }: IProps) => {
         </div>
       ) : (
         <>
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

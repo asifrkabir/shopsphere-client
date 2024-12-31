@@ -1,8 +1,8 @@
-import { IReview } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Star } from "lucide-react";
+import { IReview } from "@/types";
 import { format } from "date-fns";
+import { FaStar } from "react-icons/fa";
 
 interface IProps {
   review: IReview;
@@ -47,7 +47,7 @@ const ReviewCard = ({ review }: IProps) => {
       <CardContent className="space-y-4">
         <div className="flex items-center">
           {Array.from({ length: 5 }).map((_, index) => (
-            <Star
+            <FaStar
               key={index}
               className={`h-5 w-5 ${
                 index < rating ? "text-yellow-400" : "text-gray-300"

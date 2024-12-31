@@ -37,9 +37,7 @@ const ProductDetailsPage = () => {
       </Suspense>
 
       <div className="mb-10 mt-32">
-        <h2 className="text-xl font-semibold text-center mt-4">
-          Related Products
-        </h2>
+        <h2 className="text-xl font-semibold mt-4">Suggested Products</h2>
       </div>
 
       <Suspense>
@@ -47,7 +45,7 @@ const ProductDetailsPage = () => {
       </Suspense>
 
       <div className="mb-10 mt-32">
-        <h2 className="text-xl font-semibold text-center mt-4">Reviews</h2>
+        <h2 className="text-xl font-semibold mt-4">Customer Reviews</h2>
       </div>
 
       <Suspense>

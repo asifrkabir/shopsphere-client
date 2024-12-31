@@ -29,8 +29,6 @@ interface IProps {
 const ProductCard = ({ product }: IProps) => {
   const { addProduct } = useRecentProducts();
 
-  const maxImagesToShow = 1;
-
   const {
     name,
     price,
@@ -140,24 +138,14 @@ const ProductCard = ({ product }: IProps) => {
 
       <CardContent className="p-4 pb-0">
         {imageUrls && imageUrls.length > 0 ? (
-          <div className="grid xs:grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-2 mb-4">
-            {imageUrls.slice(0, maxImagesToShow).map((imageUrl, index) => (
-              <div key={index} className="relative overflow-hidden">
-                <Image
-                  src={imageUrl}
-                  alt={`Product image ${index + 1}`}
-                  width={300}
-                  height={150}
-                  className="object-cover transition duration-300 rounded-sm w-full"
-                />
-                {index === maxImagesToShow - 1 &&
-                  imageUrls!.length > maxImagesToShow && (
-                    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-lg font-bold">
-                      +{imageUrls!.length - maxImagesToShow}
-                    </div>
-                  )}
-              </div>
-            ))}
+          <div className="w-full gap-2 mb-4">
+            <Image
+              src={imageUrls[0]}
+              alt={`Product image`}
+              width={300}
+              height={150}
+              className="object-cover transition duration-300 rounded-sm w-full"
+            />
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-2 mb-4">
