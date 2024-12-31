@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useRecentProducts } from "@/context/recentProducts.provider";
 import { IProduct } from "@/types";
-import { Eye, UserCheck } from "lucide-react"; // Importing the Star icon
+import { AlertTriangle, Check, Eye, UserCheck, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
@@ -66,8 +66,8 @@ const ProductCard = ({ product }: IProps) => {
 
   return (
     <Card className="relative flex flex-col rounded-lg border w-full h-full transition-shadow hover:shadow-md">
-      <CardHeader className="flex-grow flex flex-col p-4">
-        <div className="mt-2 grid grid-cols-4 justify-end">
+      <CardHeader className="flex-grow flex flex-col p-4 pb-0">
+        <div className="grid grid-cols-4 justify-end">
           <div className="col-span-3">
             <Link
               href={`/products/${product._id}`}
@@ -78,7 +78,7 @@ const ProductCard = ({ product }: IProps) => {
             <TooltipProvider>
               <Link
                 href={`/shops/${shop._id}`}
-                className="flex items-center mb-4 mt-2 max-w-max"
+                className="flex items-center max-w-max"
               >
                 by
                 <span className="text-emerald-500 ml-1">
@@ -96,34 +96,39 @@ const ProductCard = ({ product }: IProps) => {
             </TooltipProvider>
           </div>
           <div className="col-span-1 ml-auto">
-            {inventoryCount <= 0 ? (
-              <Badge className="bg-gray-400 text-white">Out of Stock</Badge>
-            ) : inventoryCount <= 5 ? (
-              <Badge className="bg-yellow-500 text-white">Limited Stock</Badge>
-            ) : (
-              <Badge className="bg-emerald-500 text-white text-center">
-                In Stock
-              </Badge>
-            )}
+            <TooltipProvider>
+              {inventoryCount <= 0 ? (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Badge className="bg-gray-400 text-white p-1">
+                      <X className="w-4 h-4" />
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>Out of Stock</TooltipContent>
+                </Tooltip>
+              ) : inventoryCount <= 5 ? (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Badge className="bg-yellow-500 text-white p-1">
+                      <AlertTriangle className="w-4 h-4" />
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>Limited Stock</TooltipContent>
+                </Tooltip>
+              ) : (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Badge className="bg-emerald-500 text-white p-1">
+                      <Check className="w-4 h-4" />
+                    </Badge>
+                  </TooltipTrigger>
+                  <TooltipContent>In Stock</TooltipContent>
+                </Tooltip>
+              )}
+            </TooltipProvider>
           </div>
         </div>
 
-        <div className="text-lg font-semibold">
-          {onSale ? (
-            <>
-              <span className="text-gray-500 line-through">${price}</span>{" "}
-              <span className="text-emerald-600">${discountedPrice}</span>{" "}
-              <span className="text-red-500 text-sm font-bold">
-                ({Math.round(((price - (discountedPrice || 0)) / price) * 100)}%
-                OFF)
-              </span>
-            </>
-          ) : (
-            <span>${price}</span>
-          )}
-        </div>
-
-        {/* Display the rating here */}
         {rating !== undefined ? (
           <div className="flex items-center gap-1 mt-2">
             {renderStars(rating)}{" "}
@@ -135,7 +140,7 @@ const ProductCard = ({ product }: IProps) => {
 
       <CardContent className="p-4 pb-0">
         {imageUrls && imageUrls.length > 0 ? (
-          <div className="grid xs:grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-2 mb-8">
+          <div className="grid xs:grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-2 mb-4">
             {imageUrls.slice(0, maxImagesToShow).map((imageUrl, index) => (
               <div key={index} className="relative overflow-hidden">
                 <Image
@@ -155,7 +160,7 @@ const ProductCard = ({ product }: IProps) => {
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-2 mb-8">
+          <div className="grid grid-cols-1 gap-2 mb-4">
             {Array.from({ length: 1 }).map((_, index) => (
               <div key={index} className="relative overflow-hidden">
                 <Image
@@ -169,6 +174,21 @@ const ProductCard = ({ product }: IProps) => {
             ))}
           </div>
         )}
+
+        <div className="text-lg font-semibold my-4">
+          {onSale ? (
+            <>
+              <span className="text-gray-500 line-through">${price}</span>{" "}
+              <span className="text-emerald-600">${discountedPrice}</span>{" "}
+              <span className="text-red-500 text-sm font-bold">
+                ({Math.round(((price - (discountedPrice || 0)) / price) * 100)}%
+                OFF)
+              </span>
+            </>
+          ) : (
+            <span>${price}</span>
+          )}
+        </div>
       </CardContent>
 
       <CardFooter className="mt-auto p-4 pt-0 flex flex-wrap justify-between items-center">

@@ -1,10 +1,10 @@
-import Products from "@/components/product/Products";
 import { Suspense } from "react";
 import Banner from "./components/Banner";
 import CompareProducts from "./components/CompareProducts";
 import HotDealsProducts from "./components/HotDealsProducts";
 import ProductCategories from "./components/ProductCategories";
 import RecentProducts from "./components/RecentProducts";
+import TrendingProducts from "./components/TrendingProducts";
 
 export default function HomePage() {
   return (
@@ -37,19 +37,26 @@ export default function HomePage() {
         <HotDealsProducts />
       </Suspense>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         <div className="flex items-center justify-center mb-8 mt-10" />
         <Suspense>
           <CompareProducts />
         </Suspense>
       </div>
 
-      <div className="flex items-center justify-center mb-8 mt-40">
-        <h1 className="text-lg font-semibold md:text-2xl">All Products</h1>
+      <div className="max-w-7xl mx-auto w-full mb-20">
+        <div className="flex flex-col mb-8 mt-20">
+          <h1 className="text-lg font-semibold md:text-2xl">
+            Trending Products
+          </h1>
+          <h2 className="text-md text-muted-foreground">
+            Today's top picks for you
+          </h2>
+        </div>
+        <Suspense>
+          <TrendingProducts />
+        </Suspense>
       </div>
-      <Suspense>
-        <Products />
-      </Suspense>
     </div>
   );
 }
